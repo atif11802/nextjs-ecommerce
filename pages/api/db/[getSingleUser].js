@@ -10,5 +10,5 @@ export default async function handler(req, res) {
 		_id: session.user._id,
 	});
 
-	res.status(200).json({ user });
+	res.status(200).json(user);
 }

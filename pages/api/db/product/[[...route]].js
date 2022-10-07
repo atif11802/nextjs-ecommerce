@@ -11,9 +11,7 @@ export default async function handler(req, res) {
 	if (route[0] === "getProducts") {
 		const products = await Product.find();
 
-		return res.status(200).json({
-			products,
-		});
+		return res.status(200).json(products);
 	} else if (route[0] === "postProduct") {
 		if (req.method === "POST") {
 			const { id } = req.headers;
@@ -33,7 +31,7 @@ export default async function handler(req, res) {
 				price,
 				description,
 				offer,
-				quantity,
+				countInStock,
 				reviews,
 				brand,
 			} = req.body;
@@ -43,7 +41,7 @@ export default async function handler(req, res) {
 			const product = new Product({
 				name,
 
-				quantity,
+				countInStock,
 				price,
 				description,
 				offer,
@@ -64,6 +62,17 @@ export default async function handler(req, res) {
 		}
 	} else if (route[0] === "updateProduct") {
 		if (req.method === "PATCH") {
+			const { id } = req.headers;
+
+			if (!id) return res.status(400).json({ message: "unauthorized" });
+
+			const user = await User.findOne({
+				_id: id,
+			});
+
+			if (!user || user.role !== "admin")
+				return res.status(400).json({ message: "unauthorized" });
+
 			const productId = route[1];
 
 			const product = await Product.findOne({ _id: productId });
@@ -76,7 +85,7 @@ export default async function handler(req, res) {
 						new: true,
 					}
 				);
-				console.log(updatedProduct);
+
 				return res.status(200).json({
 					product: updatedProduct,
 				});
@@ -86,6 +95,79 @@ export default async function handler(req, res) {
 				});
 			}
 		}
+	} else if (route[0] === "deleteProduct") {
+		if (req.method === "DELETE") {
+			const { id } = req.headers;
+
+			if (!id) return res.status(400).json({ message: "unauthorized" });
+
+			const user = await User.findOne({
+				_id: id,
+			});
+
+			if (!user || user.role !== "admin")
+				return res.status(400).json({ message: "unauthorized" });
+
+			const productId = route[1];
+
+			const product = await Product.findOne({ _id: productId });
+
+			console.log(product);
+
+			if (product) {
+				const deleteProduct = await Product.findByIdAndDelete(product._id);
+
+				return res.status(200).json(deleteProduct);
+			} else {
+				return res.status(400).json({
+					error: "Product not found",
+				});
+			}
+		}
+	} else if (route[0] === "getSingleProduct") {
+		const productId = route[1];
+
+		const product = await Product.findOne({ _id: productId });
+
+		if (product) {
+			const foundProduct = await Product.findById(product._id);
+
+			return res.status(200).json(foundProduct);
+		} else {
+			return res.status(400).json({
+				error: "Product not found",
+			});
+		}
+	} else if (route[0] === "createReviewProduct") {
+		const { id } = req.headers;
+
+		if (!id) return res.status(400).json({ message: "unauthorized" });
+
+		const user = await User.findOne({
+			_id: id,
+		});
+
+		const product = await Product.findById(route[1]);
+
+		const { rating, comment } = JSON.parse(req.body);
+
+		const review = {
+			name: user.name,
+			rating: Number(rating),
+			comment,
+			user: user._id,
+		};
+
+		product.reviews.push(review);
+
+		product.numReviews = product.reviews.length;
+
+		product.rating =
+			product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+			product.reviews.length;
+
+		await product.save();
+		res.status(201).json({ message: "Review added" });
 	}
 	// return;
 }

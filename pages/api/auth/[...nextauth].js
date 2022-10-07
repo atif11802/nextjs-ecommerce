@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../../../lib/mongodb";
@@ -14,6 +15,7 @@ export const authOptions = {
 			clientId: process.env.GITHUB_ID,
 			clientSecret: process.env.GITHUB_SECRET,
 			profile(profile) {
+				console.log(profile);
 				return {
 					id: profile.id,
 					email: profile.email,
@@ -21,6 +23,7 @@ export const authOptions = {
 					location: profile.location,
 					role: "buyer",
 					name: profile.name,
+					TotalBuy: 0,
 				};
 			},
 		}),
@@ -38,11 +41,9 @@ export const authOptions = {
 			},
 			async authorize(credentials, req) {
 				connectDB();
-				console.log(credentials);
+
 				// Add logic here to look up the user from the credentials supplied
 				const user = await User.findOne();
-
-				console.log(user);
 
 				if (user) {
 					// Any object returned will be saved in `user` property of the JWT
@@ -53,6 +54,28 @@ export const authOptions = {
 
 					// You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
 				}
+			},
+		}),
+		GoogleProvider({
+			clientId: process.env.GOOGLE_CLIENT_ID,
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+			profile(profile) {
+				return {
+					id: profile.sub,
+					email: profile.email,
+					image: profile.picture,
+					location: "dhaka",
+					role: "buyer",
+					name: profile.name,
+					TotalBuy: 0,
+				};
+			},
+			authorization: {
+				params: {
+					prompt: "consent",
+					access_type: "offline",
+					response_type: "code",
+				},
 			},
 		}),
 
@@ -87,5 +110,6 @@ export const authOptions = {
 			return session;
 		},
 	},
+	secret: "DHDHSD",
 };
 export default NextAuth(authOptions);
