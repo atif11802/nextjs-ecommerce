@@ -8,8 +8,6 @@ const Product = ({ product }) => {
 	const cart = useSelector((state) => state.cart.cart);
 	const dispatch = useDispatch();
 
-	useEffect(() => {}, []);
-
 	return (
 		<>
 			<div
@@ -23,22 +21,32 @@ const Product = ({ product }) => {
 					height={300}
 					alt={product.name}
 				/>
-				<div className='px-5 py-3 space-y-2'>
+				<div className='px-5 py-3 space-y-2 text-rose-600'>
 					<h3 className='text-lg text-center'>{product.name}</h3>
 
 					<p className='space-x-2'>
-						<span className='text-2xl font-semibold'>$ {product.price}</span>
+						<span className='text-2xl font-semibold  text-rose-600'>
+							$ {product.price}
+						</span>
 					</p>
 					<div className='flex flex-col justify-between items-center pt-3 pb-2'>
-						<button
-							onClick={() => dispatch(addToCart({ product, qty: 1 }))}
-							className='px-4 py-2  bg-red-600 hover:bg-amber-600 text-center text-sm text-white rounded duration-300'
-						>
-							Add to Cart
-						</button>
+						{product.countInStock > 0 && (
+							<button
+								onClick={() => dispatch(addToCart({ product, qty: 1 }))}
+								className='px-4 py-2  bg-red-600 hover:bg-rose-800 text-center text-sm text-white rounded duration-300'
+							>
+								Add to Cart
+							</button>
+						)}
+
+						{product.countInStock === 0 && (
+							<button className='px-4 py-2  opacity-50 cursor-not-allowed bg-red-600 hover:bg-rose-800 text-center text-sm text-white rounded duration-300'>
+								Add to Cart
+							</button>
+						)}
 
 						<Link href={`/product/${product._id}`}>
-							<a className='px-4 py-2 mt-2 bg-red-600 hover:bg-amber-600 text-center text-sm text-white rounded duration-300'>
+							<a className='px-4 py-2 mt-2 bg-red-600 hover:bg-rose-800 text-center text-sm text-white rounded duration-300'>
 								product Details
 							</a>
 						</Link>

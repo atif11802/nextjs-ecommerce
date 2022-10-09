@@ -16,6 +16,7 @@
 		"daisyui": "^2.31.0",
 		"flowbite": "^1.5.3",
 		"flowbite-react": "^0.1.11",
+		"moment": "^2.29.4",
 		"mongodb": "^4.9.1",
 		"mongoose": "^6.6.1",
 		"next": "12.3.0",

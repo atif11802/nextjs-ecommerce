@@ -21,6 +21,7 @@ const ProductDetails = ({ data }) => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		if (!rating) return;
 
 		const options = {
 			method: "POST",
@@ -34,6 +35,16 @@ const ProductDetails = ({ data }) => {
 		)
 			.then((response) => response.json())
 			.then((response) => {
+				if (comments.length === 0) {
+					setComments([
+						{
+							comment,
+							rating: parseInt(rating),
+							name: session?.user?.name,
+							user: session?.user?._id,
+						},
+					]);
+				}
 				setComments([
 					...comments,
 					{
@@ -43,9 +54,9 @@ const ProductDetails = ({ data }) => {
 						user: session?.user?._id,
 					},
 				]);
-				setComment("");
 			})
 			.catch((err) => console.error(err));
+		setComment("");
 	};
 
 	return (
@@ -323,7 +334,7 @@ const ProductDetails = ({ data }) => {
 								</div>
 							)}
 
-							{data?.reviews.length > 0 && (
+							{comments.length > 0 && (
 								<div className='flex flex-col border border-white rounded-md p-3 mt-3'>
 									<h1 className='my-2 text-2xl'>Review Section</h1>
 									{comments.map((review, i) => (

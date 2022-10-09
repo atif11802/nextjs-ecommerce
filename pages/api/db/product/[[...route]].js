@@ -80,15 +80,13 @@ export default async function handler(req, res) {
 			if (product) {
 				const updatedProduct = await Product.findByIdAndUpdate(
 					product._id,
-					req.body,
+					JSON.parse(req.body),
 					{
 						new: true,
 					}
 				);
 
-				return res.status(200).json({
-					product: updatedProduct,
-				});
+				return res.status(200).json(updatedProduct);
 			} else {
 				return res.status(400).json({
 					error: "Product not found",
@@ -168,6 +166,21 @@ export default async function handler(req, res) {
 
 		await product.save();
 		res.status(201).json({ message: "Review added" });
+	} else if (route[0] === "getAllProduct") {
+		const { id } = req.headers;
+
+		if (!id) return res.status(400).json({ message: "unauthorized" });
+
+		const user = await User.findOne({
+			_id: id,
+		});
+
+		if (!user || user.role !== "admin")
+			return res.status(400).json({ message: "unauthorized" });
+
+		const allProducts = await Product.find({});
+
+		res.status(200).json(allProducts);
 	}
 	// return;
 }

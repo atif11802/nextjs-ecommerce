@@ -3,6 +3,7 @@ import { getSession, useSession } from "next-auth/react";
 import Layout from "../../components/Layout";
 import { useEffect, useState } from "react";
 import swal from "sweetalert";
+import { server } from "../config";
 
 const adminUser = ({ users }) => {
 	const [listUsers, setListUsers] = useState([]);
@@ -27,7 +28,7 @@ const adminUser = ({ users }) => {
 					body: JSON.stringify({ id: deleteUser._id }),
 				};
 
-				fetch("http://localhost:3000/api/db/deleteUser", options)
+				fetch(`${server}/api/db/deleteUser`, options)
 					.then((response) => response.json())
 					.then((response) => {
 						swal("User Deleted!", {
@@ -153,8 +154,6 @@ export async function getServerSideProps({ req }) {
 	// Fetch users from external API
 
 	const session = await getSession({ req });
-
-	console.log("session", session?.user?.role);
 
 	if (!session || session?.user?.role !== "admin") {
 		return {

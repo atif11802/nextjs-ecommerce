@@ -11,7 +11,7 @@ export default function App({
 	const Layout = Component.Layout || EmptyLayout;
 
 	return (
-		<div className='bg-red-100 min-h-screen'>
+		<div className='bg-red-100 min-h-screen' style={{}}>
 			<Provider store={store}>
 				<SessionProvider session={session}>
 					<Navbar />

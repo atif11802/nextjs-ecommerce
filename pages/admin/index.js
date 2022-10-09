@@ -1,6 +1,6 @@
 import AdminLayout from "../../layouts/adminLayout";
-import Link from "next/link";
-import { getSession } from "next-auth/react";
+// import Link from "next/link";
+// import { getSession } from "next-auth/react";
 
 const index = () => {
 	return (

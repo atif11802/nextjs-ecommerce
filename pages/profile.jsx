@@ -12,7 +12,7 @@ const profile = ({ user }) => {
 						<Image src={user.image} alt={user.name} width={300} height={300} />
 					)}
 				</div>
-				<div className=''>
+				<div className='text-gray-700'>
 					<p>Name : {user.name}</p>
 					<p>Role : {user.role}</p>
 					<p>Total Product Buy : {user.TotalBuy}</p>
