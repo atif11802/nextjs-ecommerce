@@ -12,7 +12,7 @@ const Product = ({ product }) => {
 		<>
 			<div
 				className='w-72 bg-white drop-shadow-md rounded-lg flex flex-col justify-center items-center
-			transition ease-in-out delay-150 hover:-translate-y-2  duration-300'
+			transition ease-in-out delay-150 hover:-translate-y-2  duration-300 cursor-pointer'
 			>
 				<Image
 					className='object-cover rounded-tl-lg rounded-tr-lg'
@@ -25,7 +25,7 @@ const Product = ({ product }) => {
 					<h3 className='text-lg text-center'>{product.name}</h3>
 
 					<p className='space-x-2'>
-						<span className='text-2xl font-semibold  text-rose-600'>
+						<span className='text-2xl font-semibold text-center text-rose-600'>
 							$ {product.price}
 						</span>
 					</p>

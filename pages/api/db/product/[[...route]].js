@@ -34,13 +34,13 @@ export default async function handler(req, res) {
 				countInStock,
 				reviews,
 				brand,
+				sold,
 			} = req.body;
 
 			// console.log(req.user);
 
 			const product = new Product({
 				name,
-
 				countInStock,
 				price,
 				description,
@@ -51,12 +51,13 @@ export default async function handler(req, res) {
 				reviews,
 				user: user._id,
 				category,
+				sold: 0,
 			});
 			await product.save((err, result) => {
 				if (err) {
 					return res.status(400).json({ err });
 				} else {
-					return res.status(400).json(result);
+					return res.status(200).json(result);
 				}
 			});
 		}
@@ -123,64 +124,70 @@ export default async function handler(req, res) {
 			}
 		}
 	} else if (route[0] === "getSingleProduct") {
-		const productId = route[1];
+		if (req.method === "GET") {
+			const productId = route[1];
 
-		const product = await Product.findOne({ _id: productId });
+			const product = await Product.findOne({ _id: productId });
 
-		if (product) {
-			const foundProduct = await Product.findById(product._id);
+			if (product) {
+				const foundProduct = await Product.findById(product._id);
 
-			return res.status(200).json(foundProduct);
-		} else {
-			return res.status(400).json({
-				error: "Product not found",
-			});
+				return res.status(200).json(foundProduct);
+			} else {
+				return res.status(400).json({
+					error: "Product not found",
+				});
+			}
 		}
 	} else if (route[0] === "createReviewProduct") {
-		const { id } = req.headers;
+		if (req.method === "POST") {
+			const { id } = req.headers;
 
-		if (!id) return res.status(400).json({ message: "unauthorized" });
+			if (!id) return res.status(400).json({ message: "unauthorized" });
 
-		const user = await User.findOne({
-			_id: id,
-		});
+			const user = await User.findOne({
+				_id: id,
+			});
 
-		const product = await Product.findById(route[1]);
+			const product = await Product.findById(route[1]);
 
-		const { rating, comment } = JSON.parse(req.body);
+			const { rating, comment } = JSON.parse(req.body);
 
-		const review = {
-			name: user.name,
-			rating: Number(rating),
-			comment,
-			user: user._id,
-		};
+			const review = {
+				name: user.name,
+				rating: Number(rating),
+				comment,
+				user: user._id,
+			};
 
-		product.reviews.push(review);
+			product.reviews.push(review);
 
-		product.numReviews = product.reviews.length;
+			product.numReviews = product.reviews.length;
 
-		product.rating =
-			product.reviews.reduce((acc, item) => item.rating + acc, 0) /
-			product.reviews.length;
+			product.rating =
+				product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+				product.reviews.length;
 
-		await product.save();
-		res.status(201).json({ message: "Review added" });
+			await product.save();
+			res.status(201).json({ message: "Review added" });
+		}
 	} else if (route[0] === "getAllProduct") {
-		const { id } = req.headers;
+		if (req.method === "GET") {
+			const { id } = req.headers;
 
-		if (!id) return res.status(400).json({ message: "unauthorized" });
+			if (!id) return res.status(400).json({ message: "unauthorized" });
 
-		const user = await User.findOne({
-			_id: id,
-		});
+			const user = await User.findOne({
+				_id: id,
+			});
 
-		if (!user || user.role !== "admin")
-			return res.status(400).json({ message: "unauthorized" });
+			if (!user || user.role !== "admin")
+				return res.status(400).json({ message: "unauthorized" });
 
-		const allProducts = await Product.find({});
+			const allProducts = await Product.find({});
 
-		res.status(200).json(allProducts);
+			res.status(200).json(allProducts);
+		}
 	}
 	// return;
 }

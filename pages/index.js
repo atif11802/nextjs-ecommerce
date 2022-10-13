@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Layout from "../components/Layout";
 import Product from "../components/Product";
+import { server } from "./config";
 
 export default function Home({ data }) {
 	return (
@@ -20,7 +21,7 @@ export default function Home({ data }) {
 
 export async function getServerSideProps() {
 	// Fetch data from external API
-	const res = await fetch(`http://localhost:3000/api/db/product/getProducts`);
+	const res = await fetch(`${server}/api/db/product/getProducts`);
 	const data = await res.json();
 
 	// Pass data to the page via props
