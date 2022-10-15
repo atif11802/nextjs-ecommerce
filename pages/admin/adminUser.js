@@ -11,6 +11,8 @@ const adminUser = ({ users }) => {
 	const [newRole, setNewRole] = useState("");
 	const { data: session, status } = useSession();
 
+	console.log(users);
+
 	useEffect(() => {
 		setListUsers(users);
 	}, []);
@@ -98,6 +100,9 @@ const adminUser = ({ users }) => {
 										Role
 									</th>
 									<th scope='col' className='py-3 px-6'>
+										Total buy
+									</th>
+									<th scope='col' className='py-3 px-6'>
 										ACTION
 									</th>
 								</tr>
@@ -113,6 +118,7 @@ const adminUser = ({ users }) => {
 										<td className='py-4 px-6'>{user.name}</td>
 										<td className='py-4 px-6'>{user.email}</td>
 										<td className='py-4 px-6'>{user.role}</td>
+										<td className='py-4 px-6'>{user.TotalBuy}</td>
 										<td className='py-4 px-6 flex items-center cursor-pointer'>
 											<div className='flex'>
 												<label
