@@ -11,8 +11,6 @@ const adminUser = ({ users }) => {
 	const [newRole, setNewRole] = useState("");
 	const { data: session, status } = useSession();
 
-	console.log(users);
-
 	useEffect(() => {
 		setListUsers(users);
 	}, []);
