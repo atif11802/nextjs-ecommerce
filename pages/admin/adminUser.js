@@ -7,6 +7,8 @@ import { server } from "../config";
 
 const adminUser = ({ users }) => {
 	const [listUsers, setListUsers] = useState([]);
+	const [user, setUser] = useState({});
+	const [newRole, setNewRole] = useState("");
 	const { data: session, status } = useSession();
 
 	useEffect(() => {
@@ -48,6 +50,25 @@ const adminUser = ({ users }) => {
 				swal("happy admininja");
 			}
 		});
+	};
+
+	const handleChangeRole = () => {
+		const options = {
+			method: "PATCH",
+			headers: { id: session?.user._id },
+			body: JSON.stringify({ user: user._id, role: newRole }),
+		};
+
+		fetch(`${server}/api/db/updateUser`, options)
+			.then((response) => response.json())
+			.then((response) => {
+				setListUsers(
+					listUsers.map((item) => {
+						return item._id === response._id ? response : item;
+					})
+				);
+			})
+			.catch((err) => console.error(err));
 	};
 
 	return (
@@ -94,21 +115,27 @@ const adminUser = ({ users }) => {
 										<td className='py-4 px-6'>{user.role}</td>
 										<td className='py-4 px-6 flex items-center cursor-pointer'>
 											<div className='flex'>
-												<svg
-													xmlns='http://www.w3.org/2000/svg'
-													fill='none'
-													viewBox='0 0 24 24'
-													strokeWidth={1.5}
-													stroke='currentColor'
-													className='w-6 h-6'
+												<label
+													htmlFor='my-modal'
+													className='btn modal-button'
+													onClick={() => setUser(user)}
 												>
-													<path
-														strokeLinecap='round'
-														strokeLinejoin='round'
-														d='M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10'
-													/>
-												</svg>
-												<span>edit</span>
+													<svg
+														xmlns='http://www.w3.org/2000/svg'
+														fill='none'
+														viewBox='0 0 24 24'
+														strokeWidth={1.5}
+														stroke='currentColor'
+														className='w-6 h-6'
+													>
+														<path
+															strokeLinecap='round'
+															strokeLinejoin='round'
+															d='M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10'
+														/>
+													</svg>
+													<span>edit</span>
+												</label>
 											</div>
 											<div
 												className='ml-3 flex items-center cursor-pointer'
@@ -139,6 +166,41 @@ const adminUser = ({ users }) => {
 								))}
 							</tbody>
 						</table>
+					</div>
+				</div>
+			</div>
+			<input type='checkbox' id='my-modal' className='modal-toggle' />
+			<div className='modal'>
+				<div className='modal-box'>
+					<h3 className='font-bold text-lg'>
+						present role of this user is : {user.role}
+					</h3>
+
+					<p>
+						choose the role you want to assign to this user from the list below
+					</p>
+					<select
+						className='select select-bordered w-full max-w-xs'
+						onChange={(e) => {
+							setNewRole(e.target.value);
+						}}
+						defaultValue={user.role}
+					>
+						{/* <option disabled>select role</option> */}
+						<option value='admin'>admin</option>
+						<option value='buyer'>buyer</option>
+					</select>
+
+					<div className='modal-action'>
+						<button
+							className='px-2 bg-red-500 text-white rounded-lg '
+							onClick={handleChangeRole}
+						>
+							change role
+						</button>
+						<label htmlFor='my-modal' className='btn'>
+							cancel
+						</label>
 					</div>
 				</div>
 			</div>

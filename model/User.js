@@ -8,6 +8,7 @@ const userSchema = mongoose.Schema({
 		required: true,
 		type: String,
 		enum: ["admin", "buyer"],
+		default: "buyer",
 	},
 	image: String,
 	TotalBuy: Number,
