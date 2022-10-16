@@ -2,6 +2,7 @@ import connectDB from "../../../../db";
 import Product from "../../../../model/Product";
 import { getSession } from "next-auth/react";
 import User from "../../../../model/User";
+import cloudinary from "../../../../cloudinary";
 
 export default async function handler(req, res) {
 	const { route } = req.query;
@@ -35,9 +36,8 @@ export default async function handler(req, res) {
 				reviews,
 				brand,
 				sold,
-			} = req.body;
-
-			// console.log(req.user);
+				productPictures,
+			} = JSON.parse(req.body);
 
 			const product = new Product({
 				name,
@@ -47,7 +47,7 @@ export default async function handler(req, res) {
 				offer,
 				brand,
 				// productPicture: urls.map((url) => url.res),
-				productPicture: [],
+				productPictures,
 				reviews,
 				user: user._id,
 				category,
@@ -55,6 +55,7 @@ export default async function handler(req, res) {
 			});
 			await product.save((err, result) => {
 				if (err) {
+					console.log(err);
 					return res.status(400).json({ err });
 				} else {
 					return res.status(200).json(result);
@@ -116,6 +117,10 @@ export default async function handler(req, res) {
 			console.log(product);
 
 			if (product) {
+				product.productPictures.map(async (picture) => {
+					await cloudinary.uploader.destroy(picture.public);
+				});
+
 				const deleteProduct = await Product.findByIdAndDelete(product._id);
 
 				return res.status(200).json(deleteProduct);

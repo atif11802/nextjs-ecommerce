@@ -16,7 +16,7 @@ const Product = ({ product }) => {
 			>
 				<Image
 					className='object-cover rounded-tl-lg rounded-tr-lg'
-					src='https://images.unsplash.com/photo-1616332544207-7f3888d0373a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
+					src={product.productPictures[2].res}
 					width={400}
 					height={300}
 					alt={product.name}

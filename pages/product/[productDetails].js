@@ -67,22 +67,32 @@ const ProductDetails = ({ data }) => {
 						<img
 							className='w-full'
 							alt='img of a girl posing'
-							src='https://i.ibb.co/QMdWfzX/component-image-one.png'
+							src={data.productPictures[0].res}
 						/>
 						<img
 							className='mt-6 w-full'
 							alt='img of a girl posing'
-							src='https://i.ibb.co/qxkRXSq/component-image-two.png'
+							src={data.productPictures[1].res}
 						/>
 					</div>
 					<div className='md:hidden'>
 						<img
 							className='w-full'
 							alt='img of a girl posing'
-							src='https://i.ibb.co/QMdWfzX/component-image-one.png'
+							src={data.productPictures[2].res}
 						/>
 						<div className='flex items-center justify-between mt-3 space-x-4 md:space-x-0'>
-							<img
+							{data.productPictures &&
+								data.productPictures.map((pic, index) => (
+									<div>
+										<img
+											alt='img-tag-one'
+											className='md:w-48 md:h-48 w-full'
+											src={pic.res}
+										/>
+									</div>
+								))}
+							{/* <img
 								alt='img-tag-one'
 								className='md:w-48 md:h-48 w-full'
 								src='https://i.ibb.co/cYDrVGh/Rectangle-245.png'
@@ -101,7 +111,7 @@ const ProductDetails = ({ data }) => {
 								alt='img-tag-one'
 								className='md:w-48 md:h-48 w-full'
 								src='https://i.ibb.co/f17NXrW/Rectangle-244.png'
-							/>
+							/> */}
 						</div>
 					</div>
 					<div className='xl:w-2/5 md:w-1/2 lg:ml-8 md:ml-6 md:mt-0 mt-6'>

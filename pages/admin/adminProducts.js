@@ -5,11 +5,14 @@ import { server } from "../config";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import swal from "sweetalert";
+import Dropzone from "react-dropzone";
+import axios from "axios";
 // import { ToastContainer, toast } from "react-toastify";
 
 const adminProducts = ({ Allproducts }) => {
 	const { data: session, status } = useSession();
 	const [products, setProducts] = useState([]);
+	const [images, setImages] = useState([]);
 	const [product, setProduct] = useState({
 		name: "",
 		_id: "",
@@ -18,6 +21,7 @@ const adminProducts = ({ Allproducts }) => {
 		brand: "",
 		category: "",
 		description: "",
+		productPictures: [],
 	});
 
 	const [newProduct, setNewProduct] = useState({
@@ -42,6 +46,7 @@ const adminProducts = ({ Allproducts }) => {
 			brand: product.brand,
 			category: product.category,
 			description: product.description,
+			productPictures: product.productPictures,
 		});
 	};
 
@@ -116,30 +121,6 @@ const adminProducts = ({ Allproducts }) => {
 		});
 	};
 
-	const handlePostProduct = (e) => {
-		e.preventDefault();
-
-		const options = {
-			method: "POST",
-			headers: { id: session?.user._id },
-			body: new URLSearchParams({
-				name: newProduct.name,
-				countInStock: newProduct.countInStock,
-				price: newProduct.price,
-				description: newProduct.description,
-				brand: newProduct.brand,
-				category: newProduct.category,
-			}),
-		};
-
-		fetch(`${server}/api/db/product/postProduct`, options)
-			.then((response) => response.json())
-			.then((response) => {
-				setProducts([...products, response]);
-			})
-			.catch((err) => console.error(err));
-	};
-
 	const handleDelete = (deleteProduct) => {
 		console.log(deleteProduct, session?.user._id);
 		swal({
@@ -178,6 +159,91 @@ const adminProducts = ({ Allproducts }) => {
 				swal("happy admininja");
 			}
 		});
+	};
+
+	const handleDrop = async () => {
+		// Push all the axios request promise into a single array
+		const uploaders = Object.values(images).map((file) => {
+			// Initial FormData
+			const formData = new FormData();
+			formData.append("file", file);
+			formData.append("tags", `codeinfuse, medium, gist`);
+			formData.append("upload_preset", "chatapp"); // Replace the preset name with your own
+			formData.append("api_key", "182276719267498"); // Replace API key with your own Cloudinary key
+			formData.append("timestamp", (Date.now() / 1000) | 0);
+
+			// Make an AJAX upload request using Axios (replace Cloudinary URL below with your own)
+			return axios
+				.post("https://api.cloudinary.com/v1_1/ratul/image/upload", formData, {
+					headers: { "X-Requested-With": "XMLHttpRequest" },
+				})
+				.then((response) => {
+					const data = response.data;
+
+					return data;
+				});
+		});
+
+		// Once all the files are uploaded
+		return await axios.all(uploaders).then(() => {
+			// ... perform after upload is successful operation
+			// uploaders.map((uploader) => {
+			// 	uploader.then((response) => {
+			// 		setUploadedImages([...uploadedImages, response]);
+			// 	});
+			// });
+			return uploaders;
+		});
+	};
+
+	const handlePostProduct = async (e) => {
+		e.preventDefault();
+
+		try {
+			const pic = await handleDrop();
+
+			let imageResponses = await Promise.all(pic);
+			// res.status(200).json({ images: imageResponses });
+			const productPictures = imageResponses.map((image) => {
+				let obj = {};
+				obj.res = image.secure_url;
+				obj.public = image.public_id;
+				return obj;
+				// return ({ public_id, secure_url } = image);
+			});
+
+			const options = {
+				method: "POST",
+				headers: { id: session?.user._id },
+				body: JSON.stringify({
+					name: newProduct.name,
+					countInStock: newProduct.countInStock,
+					price: newProduct.price,
+					description: newProduct.description,
+					brand: newProduct.brand,
+					category: newProduct.category,
+					productPictures,
+				}),
+			};
+
+			fetch(`${server}/api/db/product/postProduct`, options)
+				.then((response) => response.json())
+				.then((response) => {
+					setProducts([...products, response]);
+					setNewProduct({
+						name: "",
+						countInStock: "",
+						price: "",
+						description: "",
+						brand: "",
+						category: "",
+					});
+					setImages([]);
+				})
+				.catch((err) => console.error(err));
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (
@@ -253,14 +319,16 @@ const adminProducts = ({ Allproducts }) => {
 										<td className='py-4 px-2'>{product.countInStock}</td>
 										<td className='py-4 px-6'>{product.price}</td>
 										<td className='py-4 px-6'>{product.sold}</td>
-										<td className='py-4 px-6'>{product.rating.toFixed(2)}</td>
+										<td className='py-4 px-6'>{product?.rating?.toFixed(2)}</td>
 										<td className='py-4 px-6'>
 											{moment(product.createdAt).format("MM-DD-YYYY")}
 										</td>
 										<td className='py-4 px-6 flex cursor-pointer'>
 											<label
 												htmlFor='my-modal-4'
-												onClick={() => handleModal(product)}
+												onClick={() => {
+													handleModal(product);
+												}}
 												className='btn modal-button'
 											>
 												<svg
@@ -392,6 +460,25 @@ const adminProducts = ({ Allproducts }) => {
 					>
 						Description
 					</label>
+					<label
+						htmlFor='message'
+						className='block mb-2 text-sm font-medium text-white dark:text-gray-400  mt-3'
+					>
+						images
+					</label>
+					<div className='flex mt-2'>
+						{product.productPictures?.map((pic, index) => {
+							return (
+								<div key={pic.public} className='ml-3 mb-2'>
+									<img
+										className='w-[40] h-[40] object-cover rounded-md'
+										src={pic.res}
+										alt={product.name}
+									/>
+								</div>
+							);
+						})}
+					</div>
 
 					<textarea
 						id='message'
@@ -494,11 +581,46 @@ const adminProducts = ({ Allproducts }) => {
 								type='number'
 								name='price'
 								id='price'
-								className='bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+								className='bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
 								placeholder='enter Total price'
 								required
 								onChange={handleNewProductChange}
 							/>
+						</div>
+						<div className='flex justify-center'>
+							<div className='mb-3  w-full'>
+								{/* <Dropzone onDrop={handleDrop} multiple accept='image/*'>
+									<p>Drop your files or click here to upload</p>
+								</Dropzone> */}
+								<label
+									htmlFor='formFile'
+									className='form-label inline-block mb-2 text-white'
+								>
+									Image upload
+								</label>
+								<input
+									className='form-control block
+    w-full
+   
+    text-base
+    font-normal
+    text-gray-700
+    bg-white bg-clip-padding
+    border border-solid border-gray-300
+    rounded
+    transition
+    ease-in-out
+    m-0
+    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
+									type='file'
+									id='formFile'
+									multiple
+									// onChange={handleImageUpload}
+									onChange={(e) => {
+										setImages(e.target.files);
+									}}
+								/>
+							</div>
 						</div>
 						<div>
 							<label
