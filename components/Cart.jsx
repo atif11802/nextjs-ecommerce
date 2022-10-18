@@ -89,12 +89,11 @@ export default function Example() {
 					Shipping and taxes calculated at checkout.
 				</p>
 				<div className='mt-6'>
-					<a
-						href='#'
-						className='flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700'
-					>
-						Checkout
-					</a>
+					<Link href='/checkout'>
+						<a className='flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700'>
+							Checkout
+						</a>
+					</Link>
 				</div>
 				<div className='mt-6 flex justify-center text-center text-sm text-gray-500'>
 					<p>

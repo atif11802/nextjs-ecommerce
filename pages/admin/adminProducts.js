@@ -384,49 +384,49 @@ const adminProducts = ({ Allproducts }) => {
 				<label className='modal-box relative' htmlFor=''>
 					<label
 						htmlFor='message'
-						className='block mb-2 text-sm font-medium text-white dark:text-gray-400'
+						className='block mb-2 text-sm font-medium text-black dark:text-gray-400 border-rose-700'
 					>
 						Name
 					</label>
 					<input
 						type='text'
 						placeholder='name'
-						className='input w-full text-white '
+						className='bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
 						value={product.name}
 						name='name'
 						onChange={handleChange}
 					/>
 					<label
 						htmlFor='message'
-						className='block mb-2  mt-3 text-sm font-medium text-white dark:text-gray-400'
+						className='block mb-2  mt-3 text-sm font-medium text-black dark:text-gray-400'
 					>
 						Category
 					</label>
 					<input
 						type='text'
 						placeholder='category'
-						className='input w-full text-white'
+						className='bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
 						value={product.category}
 						name='category'
 						onChange={handleChange}
 					/>
 					<label
 						htmlFor='message'
-						className='block mb-2 text-sm   mt-3font-medium text-white dark:text-gray-400'
+						className='block mb-2 text-sm   mt-3 font-medium text-black dark:text-gray-400'
 					>
 						Count In Stock
 					</label>
 					<input
 						type='text'
 						placeholder='countInStock'
-						className='input w-full text-white'
+						className='bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
 						value={product.countInStock}
 						name='countInStock'
 						onChange={handleChange}
 					/>
 					<label
 						htmlFor='message'
-						className='block mb-2 text-sm font-medium text-white dark:text-gray-400  mt-3'
+						className='block mb-2 text-sm font-medium text-black dark:text-gray-400  mt-3'
 					>
 						Price
 					</label>
@@ -434,21 +434,21 @@ const adminProducts = ({ Allproducts }) => {
 					<input
 						type='text'
 						placeholder='price'
-						className='input w-full  text-white'
+						className='bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
 						value={product.price}
 						name='price'
 						onChange={handleChange}
 					/>
 					<label
 						htmlFor='message'
-						className='block mb-2 text-sm font-medium text-white dark:text-gray-400  mt-3'
+						className='block mb-2 text-sm font-medium text-black dark:text-gray-400  mt-3'
 					>
 						Brand
 					</label>
 					<input
 						type='text'
 						placeholder='brand'
-						className='input w-full text-white'
+						className='bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
 						value={product.brand}
 						name='brand'
 						onChange={handleChange}
@@ -456,10 +456,18 @@ const adminProducts = ({ Allproducts }) => {
 
 					<label
 						htmlFor='message'
-						className='block mb-2 text-sm  mt-3 font-medium text-white dark:text-gray-400'
+						className='block mb-2 text-sm  mt-3 font-medium text-black dark:text-gray-400'
 					>
 						Description
 					</label>
+					<input
+						type='text'
+						placeholder='description'
+						className='bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+						value={product.description}
+						name='description'
+						onChange={handleChange}
+					/>
 					<label
 						htmlFor='message'
 						className='block mb-2 text-sm font-medium text-white dark:text-gray-400  mt-3'
@@ -483,7 +491,7 @@ const adminProducts = ({ Allproducts }) => {
 					<textarea
 						id='message'
 						rows='4'
-						className='block p-2.5 w-full text-sm bg-slate-800 text-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+						className='bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
 						placeholder='description'
 						value={product.description}
 						name='description'
@@ -506,7 +514,7 @@ const adminProducts = ({ Allproducts }) => {
 						<div>
 							<label
 								htmlFor='name'
-								className='block mb-2 text-sm font-medium text-gray-300'
+								className='block mb-2 text-sm font-medium text-gray-900'
 							>
 								Product name
 							</label>
@@ -514,7 +522,7 @@ const adminProducts = ({ Allproducts }) => {
 								type='text'
 								name='name'
 								id='name'
-								className='bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+								className='bg-gray-50 border border-gray-900 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
 								placeholder='enter name'
 								required
 								onChange={handleNewProductChange}
@@ -523,7 +531,7 @@ const adminProducts = ({ Allproducts }) => {
 						<div>
 							<label
 								htmlFor='brand'
-								className='block mb-2 text-sm font-medium text-gray-300'
+								className='block mb-2 text-sm font-medium text-gray-900'
 							>
 								Brand
 							</label>
@@ -531,7 +539,7 @@ const adminProducts = ({ Allproducts }) => {
 								type='text'
 								name='brand'
 								id='brand'
-								className='bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+								className='bg-gray-50 border border-gray-900 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
 								placeholder='enter brand'
 								required
 								onChange={handleNewProductChange}
@@ -540,7 +548,7 @@ const adminProducts = ({ Allproducts }) => {
 						<div>
 							<label
 								htmlFor='countInStock'
-								className='block mb-2 text-sm font-medium text-gray-300'
+								className='block mb-2 text-sm font-medium text-gray-900'
 							>
 								count In Stock
 							</label>
@@ -548,7 +556,7 @@ const adminProducts = ({ Allproducts }) => {
 								type='text'
 								name='countInStock'
 								id='countInStock'
-								className='bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+								className='bg-gray-50 border border-gray-900 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
 								placeholder='enter Total count In Stock'
 								required
 								onChange={handleNewProductChange}
@@ -557,14 +565,14 @@ const adminProducts = ({ Allproducts }) => {
 						<div>
 							<label
 								htmlFor='description'
-								className='block mb-2 text-sm font-medium text-gray-300'
+								className='block mb-2 text-sm font-medium text-gray-900'
 							>
 								Description
 							</label>
 							<textarea
 								id='message'
 								rows='4'
-								className='block p-2.5 w-full text-sm text-black  rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+								className='block p-2.5 w-full text-sm text-black  rounded-lg border border-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
 								placeholder='description'
 								name='description'
 								onChange={handleNewProductChange}
@@ -573,7 +581,7 @@ const adminProducts = ({ Allproducts }) => {
 						<div>
 							<label
 								htmlFor='price'
-								className='block mb-2 text-sm font-medium text-gray-300'
+								className='block mb-2 text-sm font-medium text-gray-900'
 							>
 								Price
 							</label>
@@ -581,7 +589,7 @@ const adminProducts = ({ Allproducts }) => {
 								type='number'
 								name='price'
 								id='price'
-								className='bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+								className='bg-gray-50 border border-gray-900 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
 								placeholder='enter Total price'
 								required
 								onChange={handleNewProductChange}
@@ -606,7 +614,7 @@ const adminProducts = ({ Allproducts }) => {
     font-normal
     text-gray-700
     bg-white bg-clip-padding
-    border border-solid border-gray-300
+    border border-solid border-gray-900
     rounded
     transition
     ease-in-out
@@ -625,7 +633,7 @@ const adminProducts = ({ Allproducts }) => {
 						<div>
 							<label
 								htmlFor='category'
-								className='block mb-2 text-sm font-medium text-gray-300'
+								className='block mb-2 text-sm font-medium text-gray-900'
 							>
 								Category
 							</label>
@@ -633,7 +641,7 @@ const adminProducts = ({ Allproducts }) => {
 								type='text'
 								name='category'
 								id='category'
-								className='bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
+								className='bg-gray-50 border border-gray-900 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
 								placeholder='enter Total price'
 								required
 								onChange={handleNewProductChange}
@@ -642,7 +650,7 @@ const adminProducts = ({ Allproducts }) => {
 						<button
 							onClick={handlePostProduct}
 							type='submit'
-							className='w-full text-white bg-rose-700 hover:bg-rose-800  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+							className='w-full text-white bg-rose-700 hover:bg-rose-800  focus:ring-4 focus:outline-none focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
 						>
 							Add this product
 						</button>

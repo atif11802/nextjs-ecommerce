@@ -110,11 +110,7 @@ export default async function handler(req, res) {
 
 			const productId = route[1];
 
-			console.log(productId);
-
 			const product = await Product.findOne({ _id: productId });
-
-			console.log(product);
 
 			if (product) {
 				product.productPictures.map(async (picture) => {
