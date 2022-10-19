@@ -28,6 +28,8 @@ export async function getServerSideProps({ req }) {
 
 	const session = await getSession({ req });
 
+	console.log(session);
+
 	if (!session) {
 		return {
 			redirect: {
@@ -40,6 +42,10 @@ export async function getServerSideProps({ req }) {
 	let res = await fetch(`${server}/api/db/${session.user._id}`, {
 		headers: {
 			cookie: req.headers.cookie || "",
+
+			"Content-Type": "application/json",
+			Accept: "application/json",
+			"User-Agent": "*", // 👈
 		},
 	});
 

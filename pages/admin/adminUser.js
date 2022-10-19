@@ -230,7 +230,16 @@ export async function getServerSideProps({ req }) {
 		};
 	}
 
-	const res = await fetch(`http://localhost:3000/api/db/getAllUser`);
+	const res = await fetch(`http://localhost:3000/api/db/getAllUser`, {
+		headers: {
+			id: session?.user?._id,
+			cookie: req.headers.cookie || "",
+
+			"Content-Type": "application/json",
+			Accept: "application/json",
+			"User-Agent": "*",
+		},
+	});
 	const users = await res.json();
 
 	// Pass users to the page via props

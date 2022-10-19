@@ -681,7 +681,14 @@ export async function getServerSideProps({ req }) {
 
 	const res = await fetch(`${server}/api/db/product/getAllProduct`, {
 		method: "GET",
-		headers: { id: session?.user?._id },
+		headers: {
+			id: session?.user?._id,
+			cookie: req.headers.cookie || "",
+
+			"Content-Type": "application/json",
+			Accept: "application/json",
+			"User-Agent": "*",
+		},
 	});
 
 	const Allproducts = await res.json();

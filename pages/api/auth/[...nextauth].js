@@ -15,7 +15,6 @@ export const authOptions = {
 			clientId: process.env.GITHUB_ID,
 			clientSecret: process.env.GITHUB_SECRET,
 			profile(profile) {
-				console.log(profile);
 				return {
 					id: profile.id,
 					email: profile.email,
