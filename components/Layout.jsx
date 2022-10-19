@@ -16,7 +16,7 @@ const Layout = ({ title, content, children }) => {
 					href='/favicon-16x16.png'
 				></link>
 
-				<script src='https://unpkg.com/flowbite@1.4.5/dist/flowbite.js'></script>
+				{/* <script src='https://unpkg.com/flowbite@1.4.5/dist/flowbite.js'></script> */}
 				{/* <Script
 					
 					strategy='beforeInteractive'
