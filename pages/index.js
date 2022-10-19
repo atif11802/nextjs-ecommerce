@@ -2,7 +2,7 @@ import Script from "next/script";
 import { useState } from "react";
 import Layout from "../components/Layout";
 import Product from "../components/Product";
-import { server } from "./config";
+import { server } from "../config";
 
 export default function Home({ data }) {
 	return (

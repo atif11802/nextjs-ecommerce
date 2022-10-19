@@ -3,7 +3,7 @@ import { getSession, useSession } from "next-auth/react";
 import Layout from "../../components/Layout";
 import { useEffect, useState } from "react";
 import swal from "sweetalert";
-import { server } from "../config";
+import { server } from "../../config";
 
 const AdminUser = ({ users }) => {
 	const [listUsers, setListUsers] = useState([]);

@@ -1,7 +1,7 @@
 import Layout from "../../components/Layout";
 import AdminLayout from "../../layouts/adminLayout";
 import { getSession, useSession } from "next-auth/react";
-import { server } from "../config";
+import { server } from "../../config";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import swal from "sweetalert";
