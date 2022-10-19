@@ -40,6 +40,7 @@ export async function getServerSideProps({ req }) {
 	}
 
 	let res = await fetch(`${server}/api/db/${session.user._id}`, {
+		method: "GET",
 		headers: {
 			cookie: req.headers.cookie || "",
 
@@ -49,7 +50,7 @@ export async function getServerSideProps({ req }) {
 		},
 	});
 
-	const user = await res.json();
+	const user = await res.json(JSON.stringify(res));
 
 	// Pass user to the page via props
 	return { props: { user } };
