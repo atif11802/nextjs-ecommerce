@@ -44,9 +44,8 @@ export async function getServerSideProps({ req }) {
 		headers: {
 			cookie: req.headers.cookie || "",
 
-			"Content-Type": "application/json",
-			Accept: "application/json",
-			"User-Agent": "*", // 👈
+			"User-Agent": "*",
+			Accept: "application/json; charset=UTF-8",
 		},
 	});
 
