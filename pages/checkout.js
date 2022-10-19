@@ -7,7 +7,7 @@ import Payment from "../components/Payment";
 import { useSelector, useDispatch } from "react-redux";
 import CheckoutComponent from "../components/CheckoutComponent";
 
-const checkout = () => {
+const Checkout = () => {
 	const address = useSelector((state) => state.checkout);
 
 	const {
@@ -64,4 +64,4 @@ const checkout = () => {
 	);
 };
 
-export default checkout;
+export default Checkout;

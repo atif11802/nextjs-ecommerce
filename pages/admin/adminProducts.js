@@ -9,7 +9,7 @@ import Dropzone from "react-dropzone";
 import axios from "axios";
 // import { ToastContainer, toast } from "react-toastify";
 
-const adminProducts = ({ Allproducts }) => {
+const AdminProducts = ({ Allproducts }) => {
 	const { data: session, status } = useSession();
 	const [products, setProducts] = useState([]);
 	const [images, setImages] = useState([]);
@@ -661,9 +661,9 @@ const adminProducts = ({ Allproducts }) => {
 	);
 };
 
-export default adminProducts;
+export default AdminProducts;
 
-adminProducts.Layout = AdminLayout;
+AdminProducts.Layout = AdminLayout;
 
 export async function getServerSideProps({ req }) {
 	// Fetch users from external API

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import swal from "sweetalert";
 import { server } from "../config";
 
-const adminUser = ({ users }) => {
+const AdminUser = ({ users }) => {
 	const [listUsers, setListUsers] = useState([]);
 	const [user, setUser] = useState({});
 	const [newRole, setNewRole] = useState("");
@@ -212,9 +212,9 @@ const adminUser = ({ users }) => {
 	);
 };
 
-export default adminUser;
+export default AdminUser;
 
-adminUser.Layout = AdminLayout;
+AdminUser.Layout = AdminLayout;
 
 export async function getServerSideProps({ req }) {
 	// Fetch users from external API

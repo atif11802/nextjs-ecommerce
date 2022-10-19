@@ -1,9 +1,9 @@
 import AdminLayout from "../../layouts/adminLayout";
 
-const admin1 = () => {
-	return <div>admin1</div>;
+const Admin1 = () => {
+	return <div>Admin1</div>;
 };
 
-export default admin1;
+export default Admin1;
 
-admin1.Layout = AdminLayout;
+Admin1.Layout = AdminLayout;
