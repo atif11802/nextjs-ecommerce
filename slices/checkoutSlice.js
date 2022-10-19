@@ -9,6 +9,10 @@ const initialState = {
 		typeof window !== "undefined" && localStorage.getItem("payment")
 			? JSON.parse(localStorage.getItem("payment"))
 			: "",
+	number:
+		typeof window !== "undefined" && localStorage.getItem("number")
+			? JSON.parse(localStorage.getItem("number"))
+			: "",
 };
 
 export const checkoutSlice = createSlice({
@@ -25,10 +29,15 @@ export const checkoutSlice = createSlice({
 
 			localStorage.setItem("payment", JSON.stringify(action.payload));
 		},
+		InNumber: (state, action) => {
+			state.number = action.payload;
+
+			localStorage.setItem("number", JSON.stringify(action.payload));
+		},
 	},
 });
 
 // Action creators are generated for each case reducer function
-export const { InAddress, InPayment } = checkoutSlice.actions;
+export const { InAddress, InPayment, InNumber } = checkoutSlice.actions;
 
 export default checkoutSlice.reducer;

@@ -89,11 +89,17 @@ export default function Example() {
 					Shipping and taxes calculated at checkout.
 				</p>
 				<div className='mt-6'>
-					<Link href='/checkout'>
-						<a className='flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700'>
-							Checkout
-						</a>
-					</Link>
+					{products.length > 0 ? (
+						<Link href='/checkout'>
+							<a className='flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700'>
+								Checkout
+							</a>
+						</Link>
+					) : (
+						<h1 className='text-center text-3xl font-bold text-red-800'>
+							you have no items in cart
+						</h1>
+					)}
 				</div>
 				<div className='mt-6 flex justify-center text-center text-sm text-gray-500'>
 					<p>
@@ -101,7 +107,7 @@ export default function Example() {
 						<Link href='/'>
 							<button
 								type='button'
-								className='font-medium text-indigo-600 hover:text-indigo-500'
+								className='text-2xl font-medium text-indigo-600 hover:text-indigo-500'
 							>
 								Continue Shopping
 								<span aria-hidden='true'> &rarr;</span>

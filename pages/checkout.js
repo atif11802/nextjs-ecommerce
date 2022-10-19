@@ -19,6 +19,8 @@ const checkout = () => {
 		initialStep: 0,
 	});
 
+	console.log(activeStep);
+
 	return (
 		<Layout>
 			<Box width='100%'>
@@ -29,12 +31,12 @@ const checkout = () => {
 					<Step label={"Payment"} key={2}>
 						<Payment />
 					</Step>
-					<Step label={"Portfolio"} key={3}>
+					<Step label={"checkout"} key={3}>
 						<CheckoutComponent />
 					</Step>
 				</Steps>
 				<Center>
-					{activeStep > 0 && (
+					{activeStep > 0 && activeStep !== 2 && (
 						<button
 							className='py-2 px-4 bg-slate-600  text-white rounded-xl m-7 hover:bg-slate-800 duration-200'
 							onClick={() => {
@@ -46,8 +48,7 @@ const checkout = () => {
 					)}
 
 					<Box pl={5}></Box>
-					{
-						// address.address && address.address.length && (
+					{activeStep !== 2 && (
 						<button
 							onClick={() => {
 								nextStep(1);
@@ -56,7 +57,7 @@ const checkout = () => {
 						>
 							next
 						</button>
-					}
+					)}
 				</Center>
 			</Box>
 		</Layout>

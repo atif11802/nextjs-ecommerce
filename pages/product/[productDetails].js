@@ -84,7 +84,7 @@ const ProductDetails = ({ data }) => {
 						<div className='flex items-center justify-between mt-3 space-x-4 md:space-x-0'>
 							{data.productPictures &&
 								data.productPictures.map((pic, index) => (
-									<div>
+									<div key={index}>
 										<img
 											alt='img-tag-one'
 											className='md:w-48 md:h-48 w-full'
