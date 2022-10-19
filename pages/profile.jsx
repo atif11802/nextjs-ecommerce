@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "../components/Layout";
 import { getSession } from "next-auth/react";
 import Image from "next/image";
+import { server } from "../config";
 
 const profile = ({ user }) => {
 	return (
@@ -36,7 +37,7 @@ export async function getServerSideProps({ req }) {
 		};
 	}
 
-	let res = await fetch(`http://localhost:3000/api/db/${session.user._id}`, {
+	let res = await fetch(`${server}/api/db/${session.user._id}`, {
 		headers: {
 			cookie: req.headers.cookie || "",
 		},

@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import Layout from "../../components/Layout";
 import { addToCart } from "../../slices/cartSlice";
 import { useSession } from "next-auth/react";
+import { server } from "../../config";
 
 const ProductDetails = ({ data }) => {
 	const [show, setShow] = useState(false);
@@ -387,7 +388,7 @@ export async function getServerSideProps(context) {
 
 	// Fetch data from external API
 	const res = await fetch(
-		`http://localhost:3000/api/db/product/getSingleProduct/${query.productDetails}`
+		`${server}/api/db/product/getSingleProduct/${query.productDetails}`
 	);
 	const data = await res.json();
 
