@@ -231,6 +231,7 @@ export async function getServerSideProps({ req }) {
 	}
 
 	const res = await fetch(`http://localhost:3000/api/db/getAllUser`, {
+		method: "GET",
 		headers: {
 			id: session?.user?._id,
 
