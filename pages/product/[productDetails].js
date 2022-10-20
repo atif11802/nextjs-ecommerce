@@ -67,27 +67,27 @@ const ProductDetails = ({ data }) => {
 					<div className='xl:w-2/6 lg:w-2/5 w-80 md:block hidden'>
 						<img
 							className='w-full'
-							alt='img of a girl posing'
-							src={data.productPictures[0].res}
+							alt={data.name}
+							src={data?.productPictures[0]?.res}
 						/>
 						<img
 							className='mt-6 w-full'
-							alt='img of a girl posing'
-							src={data.productPictures[1].res}
+							alt={data.name}
+							src={data.productPictures[1]?.res}
 						/>
 					</div>
 					<div className='md:hidden'>
 						<img
 							className='w-full'
-							alt='img of a girl posing'
-							src={data.productPictures[2].res}
+							alt={data.name}
+							src={data.productPictures[2]?.res}
 						/>
 						<div className='flex items-center justify-between mt-3 space-x-4 md:space-x-0'>
 							{data.productPictures &&
-								data.productPictures.map((pic, index) => (
+								data?.productPictures.map((pic, index) => (
 									<div key={index}>
 										<img
-											alt='img-tag-one'
+											alt={data.name}
 											className='md:w-48 md:h-48 w-full'
 											src={pic.res}
 										/>
@@ -348,7 +348,7 @@ const ProductDetails = ({ data }) => {
 							{comments.length > 0 && (
 								<div className='flex flex-col border border-white rounded-md p-3 mt-3'>
 									<h1 className='my-2 text-2xl'>Review Section</h1>
-									{comments.map((review, i) => (
+									{comments?.map((review, i) => (
 										<div className='border-b-2 border-sky-500' key={i}>
 											<p>{review.name}</p>
 											<div className='flex'>
