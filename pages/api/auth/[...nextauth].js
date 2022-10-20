@@ -15,6 +15,7 @@ export const authOptions = {
 			clientId: process.env.GITHUB_ID,
 			clientSecret: process.env.GITHUB_SECRET,
 			profile(profile) {
+				console.log(profile);
 				return {
 					id: profile.id,
 					email: profile.email,
@@ -59,6 +60,7 @@ export const authOptions = {
 			clientId: process.env.GOOGLE_CLIENT_ID,
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 			profile(profile) {
+				console.log(profile);
 				return {
 					id: profile.sub,
 					email: profile.email,
@@ -112,3 +114,5 @@ export const authOptions = {
 	secret: "DHDHSD",
 };
 export default NextAuth(authOptions);
+
+// https://nextjs-ecommerce-xi-eight.vercel.app/
