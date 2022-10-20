@@ -9,6 +9,7 @@ const nextConfig = {
 			"avatars.githubusercontent.com",
 			"lh3.googleusercontent.com",
 			"res.cloudinary.com",
+			"st4.depositphotos.com",
 		],
 	},
 	// pageExtensions: ["page.tsx", "page.ts", "page.jsx", "page.js"],

@@ -14,13 +14,26 @@ const Product = ({ product }) => {
 				className='w-72 bg-white drop-shadow-md rounded-lg flex flex-col justify-center items-center
 			transition ease-in-out delay-150 hover:-translate-y-2  duration-300 cursor-pointer'
 			>
-				<Image
-					className='object-cover rounded-tl-lg rounded-tr-lg'
-					src={product.productPictures[2].res}
-					width={400}
-					height={300}
-					alt={product.name}
-				/>
+				{" "}
+				{product.productPictures.length > 0 ? (
+					<Image
+						className='object-cover rounded-tl-lg rounded-tr-lg'
+						src={product.productPictures[0].res}
+						width={400}
+						height={300}
+						alt={product.name}
+					/>
+				) : (
+					<Image
+						className='object-cover rounded-tl-lg rounded-tr-lg'
+						src={
+							"https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"
+						}
+						width={400}
+						height={300}
+						alt={product.name}
+					/>
+				)}
 				<div className='px-5 py-3 space-y-2 text-rose-600'>
 					<h3 className='text-lg text-center'>{product.name}</h3>
 

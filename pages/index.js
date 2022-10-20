@@ -33,6 +33,7 @@ export async function getServerSideProps() {
 			Accept: "application/json; charset=UTF-8",
 		},
 	});
+
 	const data = await res.json();
 
 	// Pass data to the page via props
