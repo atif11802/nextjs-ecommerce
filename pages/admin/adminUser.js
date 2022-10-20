@@ -233,11 +233,11 @@ export async function getServerSideProps({ req }) {
 	const res = await fetch(`http://localhost:3000/api/db/getAllUser`, {
 		headers: {
 			id: session?.user?._id,
+
 			cookie: req.headers.cookie || "",
 
-			"Content-Type": "application/json",
-			Accept: "application/json",
 			"User-Agent": "*",
+			Accept: "application/json; charset=UTF-8",
 		},
 	});
 	const users = await res.json();
