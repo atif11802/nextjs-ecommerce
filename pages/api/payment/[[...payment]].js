@@ -32,6 +32,8 @@ export default async function handler(req, res) {
 			formData
 		);
 
+		console.log(data);
+
 		return res.status(200).json(data);
 		// if (data.result !== "true") {
 		// 	let errorMessage = "";
@@ -47,3 +49,5 @@ export default async function handler(req, res) {
 		res.status(301).redirect(data.payment_url);
 	}
 }
+
+// https://nextjs-ecommerce-xi-eight.vercel.app/
