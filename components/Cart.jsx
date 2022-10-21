@@ -3,10 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
 import { removeFromCart } from "../slices/cartSlice";
+import { useSession, signIn } from "next-auth/react";
 
 export default function Example() {
 	const [products, setProducts] = useState([]);
 	const [total, setTotal] = useState(0.0);
+
+	const { data: session } = useSession();
 
 	const dispatch = useDispatch();
 
@@ -89,16 +92,27 @@ export default function Example() {
 					Shipping and taxes calculated at checkout.
 				</p>
 				<div className='mt-6'>
-					{products.length > 0 ? (
-						<Link href='/checkout'>
-							<a className='flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700'>
-								Checkout
-							</a>
-						</Link>
+					{session?.user ? (
+						products.length > 0 ? (
+							<Link href='/checkout'>
+								<a className='flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700'>
+									Checkout
+								</a>
+							</Link>
+						) : (
+							<h1 className='text-center text-3xl font-bold text-red-800'>
+								you have no items in cart
+							</h1>
+						)
 					) : (
-						<h1 className='text-center text-3xl font-bold text-red-800'>
-							you have no items in cart
-						</h1>
+						<div className='text-center'>
+							<h2>Login to CheckOut</h2>
+							<Link href='/api/auth/signin'>
+								<div className='flex cursor-pointer justify-center items-center'>
+									<a className='text-rose-600 text-3xl text-center'>Sign in</a>
+								</div>
+							</Link>
+						</div>
 					)}
 				</div>
 				<div className='mt-6 flex justify-center text-center text-sm text-gray-500'>
@@ -119,3 +133,5 @@ export default function Example() {
 		</div>
 	);
 }
+
+// https://nextjs-ecommerce-xi-eight.vercel.app/
