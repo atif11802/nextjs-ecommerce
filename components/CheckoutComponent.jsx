@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useSelector } from "react-redux";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { server } from "../config";
 
 const CheckoutComponent = () => {
 	const { data: session, status } = useSession();
@@ -12,19 +14,40 @@ const CheckoutComponent = () => {
 	const payment = useSelector((state) => state.checkout.payment);
 	const cartItems = useSelector((state) => state.cart.cartItems);
 
+	const router = useRouter();
+
 	useEffect(() => {
 		setProducts(cartItems);
 
 		return () => {};
 	}, [cartItems]);
 
-	console.log(products);
-
 	const totalNetPrice = products.reduce(
 		(acc, item) => acc + item.cartQuantity * item.price,
 		0
 	);
 	const shippingPrice = totalNetPrice + 60;
+
+	const handlePayment = async () => {
+		const res = await fetch(`${server}/api/payment/paymoney`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				cus_email: session?.user?.email,
+				cus_name: session?.user?.name,
+				cus_phone: number,
+				amount: shippingPrice,
+				desc: "",
+				currency: "BDT",
+			}),
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				router.push(data.payment_url);
+			});
+	};
 
 	return (
 		<div className='h-screen grid grid-cols-3'>
@@ -79,13 +102,13 @@ const CheckoutComponent = () => {
 								<label className='flex border-b border-gray-200 h-12 py-3 items-center'>
 									<span className='w-[120px] px-2'>Name</span>
 									<h1 className='ml-4 bg-rose-300 w-full p-2 text-black'>
-										{session.user.name}
+										{session?.user?.name}
 									</h1>
 								</label>
 								<label className='flex border-b border-gray-200 h-12 py-3 items-center'>
 									<span className='w-[120px] px-2'>Email</span>
 									<h1 className='ml-4 bg-rose-300 w-full p-2 text-black'>
-										{session.user.email}
+										{session?.user?.email}
 									</h1>
 								</label>
 								<label className='flex border-b border-gray-200 h-12 py-3 items-center'>
@@ -111,7 +134,10 @@ const CheckoutComponent = () => {
 					</form>
 				</div>
 
-				<button className='submit-button px-4 py-3 rounded-full bg-pink-400 text-white focus:ring focus:outline-none w-full text-xl font-semibold transition-colors'>
+				<button
+					onClick={handlePayment}
+					className='submit-button px-4 py-3 rounded-full bg-pink-400 text-white focus:ring focus:outline-none w-full text-xl font-semibold transition-colors'
+				>
 					Pay {shippingPrice.toFixed(2)}
 				</button>
 			</div>
