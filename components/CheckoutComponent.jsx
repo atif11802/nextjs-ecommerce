@@ -41,10 +41,15 @@ const CheckoutComponent = () => {
 				amount: shippingPrice,
 				desc: "",
 				currency: "BDT",
+				products,
+				address,
+				user: session?.user._id,
+				payment,
 			}),
 		})
 			.then((response) => response.json())
 			.then((data) => {
+				// console.log(data);
 				router.push(data.payment_url);
 			});
 	};

@@ -29,6 +29,8 @@ export default function Navbar() {
 		return () => {};
 	}, [cartItems]);
 
+	console.log(session);
+
 	return (
 		<Disclosure as='nav' className='bg-gray-800 sticky top-0 z-50'>
 			{({ open }) => (
@@ -161,7 +163,7 @@ export default function Navbar() {
 													{session.user.role === "admin" && (
 														<Menu.Item>
 															{({ active }) => (
-																<Link href='/admin'>
+																<Link href='/admin/order'>
 																	<a
 																		className={classNames(
 																			active ? "bg-gray-100" : "",

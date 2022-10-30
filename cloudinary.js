@@ -7,3 +7,5 @@ cloudinary.v2.config({
 });
 
 export default cloudinary;
+
+// https://nextjs-ecommerce-xi-eight.vercel.app/

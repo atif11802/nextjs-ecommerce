@@ -22,7 +22,7 @@ const Checkout = () => {
 	console.log(activeStep);
 
 	return (
-		<Layout>
+		<Layout title='checkout' content='checkout page of user'>
 			<Box width='100%'>
 				<Steps activeStep={activeStep}>
 					<Step label={"Shipping Address"} key={1}>
